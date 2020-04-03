@@ -1,0 +1,14 @@
+﻿@model Jobs
+@{
+    ViewData["Title"] = "JobSearch";
+    Layout = "_Layout";
+}
+
+<h1>Search</h1>
+<div class="text-center">
+    <input asp-for="@Model.JobType" class="form-control" />
+    &nbsp;
+    <input type="submit" value="Log In" class="btn btn-primary" />
+</div>
+
+

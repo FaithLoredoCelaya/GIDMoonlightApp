@@ -1,0 +1,35 @@
+﻿@model MoonlightGID.Models.Jobs
+
+<div>
+    <h4>Jobs</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.CompanyLogin)
+        </dd>
+        <dt class="col-sm-10">
+            Phone: @Html.DisplayNameFor(model => model.Company.ContactNumber)
+        </dt>
+        <dt class="col-sm-10">
+            Email: @Html.DisplayNameFor(model => model.Company.EmailAddress)
+        </dt>
+    </dl>
+</div>
+<div>
+    <a asp-action="JobSearch">Back to List</a>
+</div>
