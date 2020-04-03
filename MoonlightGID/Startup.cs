@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MoonlightGID.Models;
 
 namespace MoonlightGID
 {
@@ -23,6 +25,14 @@ namespace MoonlightGID
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //dont forget to change this if using another system.
+            var conn = "Server=AMB3R\\AMBRIEL;Database=MoonLight;Trusted_Connection=True;";
+            services.AddMemoryCache();
+            services.AddSession(so =>
+            {
+                so.IdleTimeout = TimeSpan.FromSeconds(60);
+            });
+            services.AddDbContext<MoonLightContext>(options => options.UseSqlServer(conn));
             services.AddControllersWithViews();
         }
 

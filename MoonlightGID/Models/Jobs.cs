@@ -15,5 +15,6 @@ namespace MoonlightGID.Models
 
         public virtual Businesses Company { get; set; }
         public virtual Services Service { get; set; }
+        public virtual Reviews Reviews { get; set; }
     }
 }

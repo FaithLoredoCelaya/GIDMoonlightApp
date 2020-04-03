@@ -18,15 +18,12 @@ namespace MoonlightGID.Models
         public virtual DbSet<Businesses> Businesses { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Jobs> Jobs { get; set; }
+        public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<Services> Services { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=AMB3R\\AMBRIEL;Database=MoonLight;Trusted_Connection=True;");
-            }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -75,6 +72,43 @@ namespace MoonlightGID.Models
                     .WithMany(p => p.Jobs)
                     .HasForeignKey(d => d.ServiceId)
                     .HasConstraintName("FK_Jobs_Services");
+            });
+
+            modelBuilder.Entity<Reviews>(entity =>
+            {
+                entity.HasKey(e => e.ReviewId);
+
+                entity.HasIndex(e => e.CompanyId)
+                    .HasName("FK_Company")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.JobId)
+                    .HasName("FK_Jobs")
+                    .IsUnique();
+
+                entity.Property(e => e.ReviewId)
+                    .HasColumnName("ReviewID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
+
+                entity.Property(e => e.JobId).HasColumnName("JobID");
+
+                entity.Property(e => e.ReviewContent)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Company)
+                    .WithOne(p => p.Reviews)
+                    .HasForeignKey<Reviews>(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BusinessesID");
+
+                entity.HasOne(d => d.Job)
+                    .WithOne(p => p.Reviews)
+                    .HasForeignKey<Reviews>(d => d.JobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Job");
             });
 
             modelBuilder.Entity<Services>(entity =>

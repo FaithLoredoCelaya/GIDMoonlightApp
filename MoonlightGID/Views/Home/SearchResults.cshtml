@@ -1,0 +1,52 @@
+﻿@model JobsReviewRepository
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                Job Name 
+                </th>
+                <th>
+                Job Type
+                </th>
+                <th>
+                Service Provider
+                </th>
+                <th>
+                Description
+                </th>
+                <th>
+                Price
+                </th>
+                <th>
+                Rating
+                </th>
+            </tr>
+            <tbody>
+                @for(int i=0;i<Model.Jobs.Count();i++)
+                {
+                    <tr>
+                        <td>
+                            @Model.Jobs[i].JobName
+                        </td>
+                        <td>
+                            @Model.Jobs[i].JobType
+                        </td>
+                        <td>
+                            @Model.Jobs[i].Company.CompanyName
+                        </td>
+                        <td>
+                            @Model.Jobs[i].Description
+                        </td>
+                        <td>
+                            @Model.Jobs[i].Price
+                        </td>
+                        <td>
+                            @Model.GetRating(Model.Reviews,Model.Jobs[i].JobId)
+                        </td>
+                        <td><input type="button" value="See More" class="btn btn-primary"/></td>
+                    </tr>
+                }
+            </tbody>
+        </thead>
+    </table>
