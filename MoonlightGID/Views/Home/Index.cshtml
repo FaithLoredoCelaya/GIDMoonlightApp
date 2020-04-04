@@ -6,12 +6,13 @@
 
 <div class="text-center">
     <h1>Welcome to</h1>
-    <img src="~/img/pgo.png" style="padding-left:5%;width:550px;height:250px;"/>
+    <img src="~/img/pgo.png" style="padding-left:5%;width:550px;height:200px;"/>
     
 </div>
 
-<div class="text-center">
+<div class="text-center" asp-action="Index">
     <form method="post">
+        <input asp-for="@Model.CustomerId" type="hidden" />
         <div class="form-group">
             <h2> Log In</h2>
             <h4 class="text-danger">@ViewBag.errorMessage</h4>

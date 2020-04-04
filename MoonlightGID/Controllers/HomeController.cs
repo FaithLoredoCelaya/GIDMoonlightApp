@@ -26,10 +26,17 @@ namespace MoonlightGID.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult JobSearch(Customers formResponse)
+        public IActionResult Index(Customers formResponse)
         {
-            Customers logCheck = _context.Customers.Find(formResponse.UserLogin);
-            if(logCheck.Equals(null))
+            Customers logCheck=null;
+            foreach (Customers c in _context.Customers)
+            {
+                if (c.UserLogin == formResponse.UserLogin)
+                {
+                    logCheck = _context.Customers.Find(c.CustomerId);
+                }
+            }
+            if(logCheck==null)
             {
                 ViewBag.errorMessage = "Wrong Username/Password";
                 return View("Index");
@@ -39,7 +46,7 @@ namespace MoonlightGID.Controllers
                 HttpContext.Session.SetJson("Customer", formResponse);
                 ViewBag.customer = formResponse.FirstName + " " + formResponse.LastName;
                 ViewBag.User = formResponse.UserLogin;
-                return View();
+                return View("JobSearch");
             }
             else
             {
