@@ -55,6 +55,21 @@ namespace MoonlightGID.Controllers
             }
         }
 
+        //this is a partial view needs to be modifed
+        [HttpPost]
+        public IActionResult SearchResults(string desc)
+        {
+            List<Jobs> jobRepo = new List<Jobs>();
+            foreach(Jobs j in _context.Jobs)
+            {
+                if (j.JobType.Contains(desc))
+                {
+                    jobRepo.Add(j);
+                }
+            }
+            return View(jobRepo);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
