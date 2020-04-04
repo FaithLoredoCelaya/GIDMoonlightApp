@@ -19,8 +19,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="JobSearch">Home|</a>
                         </li>
+                        @{ if (ViewBag.User == null)
+                            {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Log In |</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                            }
+                            else
+                            {
+                               @ViewBag.User
+                            }
+                        }
                     </ul>
                 </div>
             </div>

@@ -5,27 +5,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MoonlightGID.Infrastructure;
 using MoonlightGID.Models;
 
 namespace MoonlightGID.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly MoonLightContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(MoonLightContext context)
         {
-            _logger = logger;
+            _context=context;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult JobSearch(Customers formResponse)
         {
-            return View();
+            Customers logCheck = _context.Customers.Find(formResponse.UserLogin);
+            if(logCheck.Equals(null))
+            {
+                ViewBag.errorMessage = "Wrong Username/Password";
+                return View("Index");
+            }
+            if(formResponse.Password.Equals(logCheck.Password))
+            {
+                HttpContext.Session.SetJson("Customer", formResponse);
+                ViewBag.customer = formResponse.FirstName + " " + formResponse.LastName;
+                ViewBag.User = formResponse.UserLogin;
+                return View();
+            }
+            else
+            {
+                ViewBag.errorMessage = "Wrong Username/Password";
+                return View("Index");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

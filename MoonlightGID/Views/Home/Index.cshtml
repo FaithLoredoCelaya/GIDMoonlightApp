@@ -14,6 +14,7 @@
     <form method="post">
         <div class="form-group">
             <h2> Log In</h2>
+            <h4 class="text-danger">@ViewBag.errorMessage</h4>
             <label asp-for="@Model.UserLogin" class="control-label"></label>
             <input asp-for="@Model.UserLogin" class="form-control"/>
             <span asp-validation-for="@Model.UserLogin" class="text-danger"></span>
