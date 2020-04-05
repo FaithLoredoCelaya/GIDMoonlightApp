@@ -36,6 +36,7 @@ namespace MoonlightGID.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.Clear();
             return View();
         }
         
@@ -74,30 +75,38 @@ namespace MoonlightGID.Controllers
         [HttpPost]
         public IActionResult SearchResults(string desc)
         {
-            if(desc==null)
+
+            ViewBag.User = HttpContext.Session.GetJson<Customers>("Customer").UserLogin;
+            if (desc==null)
             {
                 return View();
             }
             JobsReviewRepository jobRepo = new JobsReviewRepository();
-            foreach(Jobs j in _context.Jobs)
+            jobRepo.Jobs = new List<Jobs>();
+            jobRepo.Reviews = new List<Reviews>();
+            foreach (Jobs j in _context.Jobs)
             {
-                if (j.JobType.Contains(desc) && j!=null)
+                if (j.JobType.Contains(desc))
                 {
-                    //job repo seems to be always null. needs to be fixed
                     jobRepo.Jobs.Add(j);
-
-                    foreach(Reviews r in _context.Reviews)
+                }
+            }
+            if (jobRepo.Jobs.Count == 0)
+            {
+                ViewBag.errorMessage = "No jobs Found";
+            }
+            else
+            {
+                for (int i = 0; i < jobRepo.Jobs.Count(); i++)
+                {
+                    foreach (Reviews r in _context.Reviews)
                     {
-                        if(r.JobId==j.JobId)
+                        if (r.JobId == jobRepo.Jobs[i].JobId)
                         {
                             jobRepo.Reviews.Add(r);
                         }
                     }
                 }
-            }
-            if(jobRepo.Jobs.Count==0)
-            {
-                ViewBag.errorMessage = "No jobs Found";
             }
             return View(jobRepo);
         }

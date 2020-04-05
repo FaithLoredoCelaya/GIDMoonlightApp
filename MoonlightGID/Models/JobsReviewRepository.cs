@@ -20,6 +20,7 @@ namespace MoonlightGID.Models
                 if (review.JobId == id)
                 {
                     total += review.Rating;
+                    count++;
                 }
                 else
                 {
@@ -27,7 +28,7 @@ namespace MoonlightGID.Models
                 }
             }
             result = total / count;
-            return total;
+            return result;
         }
     }
 }
