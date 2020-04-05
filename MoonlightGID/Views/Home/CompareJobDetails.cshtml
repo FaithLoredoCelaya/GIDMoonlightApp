@@ -1,46 +1,57 @@
-﻿@model MoonlightGID.Models.Jobs
+﻿@model MoonlightGID.Models.JobsReviewRepository
 
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Job Name
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Jobs[0].JobName
+            </dd>
+            <dt class="col-sm-2">
+                Job Category
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Jobs[0].JobType
+            </dd>
+            <dt class="col-sm-2">
+                Description
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Jobs[0].Description
+            </dd>
+            <dt class="col-sm-2">
+                Estimated Price
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Jobs[0].Price
+            </dd>
+            <dt class="col-sm-2">
+                Service Provider
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Jobs[0].Company.CompanyLogin
+            </dd>
+            <dt class="col-sm-2">
+                Reviews:
+            </dt>
+            <dd></dd>
+            @foreach (Reviews r in Model.Reviews)
+            {
+                <hr />
+                <dt class="col-sm-2">
+                    Rating: @r.Rating
+                </dt>
+                <hr />
+                <dd class="col-sm-10">
+                    @r.ReviewContent
+                </dd>
+            }
+        </dl>
+        <hr />
+    </div>
 <div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JobName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JobName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JobType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JobType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Company.CompanyLogin)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Service)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Service.ServiceId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Contact" asp-route-id="@Model.CompanyId,@Model.JobId">Contact @Model.Company.CompanyName</a> |
+    <a asp-action="Contact" asp-route-id="@Model.Jobs[0].CompanyId,@Model.Jobs[0].JobId">Contact @Model.Jobs[0].Company.CompanyName</a> |&nbsp;
+    <a asp-action="JobSearch" asp-route="@Model.Jobs[0].Description"> Return to List</a>
 </div>

@@ -52,7 +52,9 @@
                             <p>Not Rated</p>
                             }
                         </td>
-                        <td><input type="button" value="See More" class="btn btn-primary"/></td>
+                        <td>
+                            <a asp-action="CompareJobDetails" asp-route-id="@Model.Jobs[i].JobId">See More</a>
+                        </td>
                     </tr>
                 }
             </tbody>

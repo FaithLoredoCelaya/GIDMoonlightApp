@@ -71,7 +71,6 @@ namespace MoonlightGID.Controllers
             }
         }
 
-        //this is a partial view needs to be modifed
         [HttpPost]
         public IActionResult SearchResults(string desc)
         {
@@ -108,6 +107,30 @@ namespace MoonlightGID.Controllers
                     }
                 }
             }
+            return View(jobRepo);
+        }
+
+        public IActionResult CompareJobDetails(int id)
+        {
+            ViewBag.User = HttpContext.Session.GetJson<Customers>("Customer").UserLogin;
+
+            JobsReviewRepository jobRepo = new JobsReviewRepository();
+            jobRepo.Jobs = new List<Jobs>();
+            jobRepo.Reviews = new List<Reviews>();
+
+            jobRepo.Jobs.Add(_context.Jobs.Find(id));
+
+            for (int i = 0; i < jobRepo.Jobs.Count(); i++)
+            {
+                foreach (Reviews r in _context.Reviews)
+                {
+                    if (r.JobId == jobRepo.Jobs[i].JobId)
+                    {
+                        jobRepo.Reviews.Add(r);
+                    }
+                }
+            }
+            HttpContext.Session.SetJson("ToCompare", jobRepo);
             return View(jobRepo);
         }
 
