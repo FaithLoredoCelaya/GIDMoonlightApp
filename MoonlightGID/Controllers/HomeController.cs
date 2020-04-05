@@ -130,8 +130,17 @@ namespace MoonlightGID.Controllers
                     }
                 }
             }
-            HttpContext.Session.SetJson("ToCompare", jobRepo);
             return View(jobRepo);
+        }
+
+        [HttpPost]
+        public IActionResult Contact(int i)
+        {
+            Jobs j = new Jobs();
+            j = _context.Jobs.Find(i);
+            j.Company = _context.Businesses.Find(j.CompanyId);
+            ViewBag.User = HttpContext.Session.GetJson<Customers>("Customer").UserLogin;
+            return View(j);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

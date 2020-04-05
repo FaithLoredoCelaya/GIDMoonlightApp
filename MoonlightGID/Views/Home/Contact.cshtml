@@ -1,35 +1,38 @@
 ﻿@model MoonlightGID.Models.Jobs
 
 <div>
-    <h4>Jobs</h4>
+    <h4>Contact @Model.Company.CompanyName</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobName)
+            Job Name
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobName)
+            @Model.JobName
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            Estimated Price: 
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+        <dd class="col-10">
+            $ @Model.Price
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
+            Company:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Company.CompanyLogin)
+            @Model.Company.CompanyLogin
         </dd>
         <dt class="col-sm-10">
-            Phone: @Html.DisplayNameFor(model => model.Company.ContactNumber)
+            Phone: @Model.Company.ContactNumber
         </dt>
         <dt class="col-sm-10">
-            Email: @Html.DisplayNameFor(model => model.Company.EmailAddress)
+            Email: @Model.Company.EmailAddress
         </dt>
     </dl>
 </div>
 <div>
-    <a asp-action="JobSearch">Back to List</a>
+    <form asp-action="SearchResults">
+        <input type="hidden" name="desc" value="@Model.JobType" />
+        <button type="submit" class="btn btn-primary" value="@Model.JobType"> Return to the List</button>
+    </form>
 </div>
