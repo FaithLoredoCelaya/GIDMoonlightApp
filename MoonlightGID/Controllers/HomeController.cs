@@ -17,6 +17,21 @@ namespace MoonlightGID.Controllers
         public HomeController(MoonLightContext context)
         {
             _context=context;
+            List<Businesses> businesses = new List<Businesses>();
+            foreach(Businesses b in _context.Businesses)
+            {
+                businesses.Add(b);
+            }
+            foreach(Jobs j in _context.Jobs)
+            {
+                foreach(Businesses b in businesses)
+                {
+                    if(b.CompanyId == j.CompanyId)
+                    {
+                        j.Company = b;
+                    }
+                }
+            }
         }
 
         public IActionResult Index()
@@ -59,13 +74,30 @@ namespace MoonlightGID.Controllers
         [HttpPost]
         public IActionResult SearchResults(string desc)
         {
-            List<Jobs> jobRepo = new List<Jobs>();
+            if(desc==null)
+            {
+                return View();
+            }
+            JobsReviewRepository jobRepo = new JobsReviewRepository();
             foreach(Jobs j in _context.Jobs)
             {
-                if (j.JobType.Contains(desc))
+                if (j.JobType.Contains(desc) && j!=null)
                 {
-                    jobRepo.Add(j);
+                    //job repo seems to be always null. needs to be fixed
+                    jobRepo.Jobs.Add(j);
+
+                    foreach(Reviews r in _context.Reviews)
+                    {
+                        if(r.JobId==j.JobId)
+                        {
+                            jobRepo.Reviews.Add(r);
+                        }
+                    }
                 }
+            }
+            if(jobRepo.Jobs.Count==0)
+            {
+                ViewBag.errorMessage = "No jobs Found";
             }
             return View(jobRepo);
         }

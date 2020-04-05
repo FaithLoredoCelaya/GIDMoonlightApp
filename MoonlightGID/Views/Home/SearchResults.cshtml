@@ -1,5 +1,7 @@
 ﻿@model JobsReviewRepository
 
+@if (Model != null)
+{
     <table class="table">
         <thead>
             <tr>
@@ -23,7 +25,7 @@
                 </th>
             </tr>
             <tbody>
-                @for(int i=0;i<Model.Jobs.Count();i++)
+                @for (int i = 0; i < Model.Jobs.Count(); i++)
                 {
                     <tr>
                         <td>
@@ -42,7 +44,12 @@
                             @Model.Jobs[i].Price
                         </td>
                         <td>
-                            @Model.GetRating(Model.Reviews,Model.Jobs[i].JobId)
+                            if(@Model.Reviews!=null){
+                            @Model.GetRating(Model.Reviews, Model.Jobs[i].JobId)
+                            }
+                            else{
+                            Not Rated
+                            }
                         </td>
                         <td><input type="button" value="See More" class="btn btn-primary"/></td>
                     </tr>
@@ -50,3 +57,10 @@
             </tbody>
         </thead>
     </table>
+}
+else
+{
+<div class="alert-warning">
+    @ViewBag.errorMessage
+</div>
+}

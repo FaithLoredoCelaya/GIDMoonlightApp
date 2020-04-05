@@ -1,6 +1,5 @@
-﻿@model Jobs
-@{
-    ViewData["Title"] = "JobSearch";
+﻿@{
+    ViewData["Title"] = "Postings Search";
     Layout = "_Layout";
 }
 
@@ -8,10 +7,11 @@
 <h2>Search</h2>
 <div class="text-center">
     <form asp-action="SearchResults">
-        <input type="text" class="form-control" />
+        <input name="desc" type="text" class="form-control" />
         &nbsp;
         <input type="submit" value="Search" class="btn btn-primary" />
     </form>
 </div>
 
+@await Html.PartialAsync("SearchResults")
 
