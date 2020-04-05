@@ -39,11 +39,9 @@
             <dd></dd>
             @foreach (Reviews r in Model.Reviews)
             {
-                <hr />
                 <dt class="col-sm-2">
                     Rating: @r.Rating
                 </dt>
-                <hr />
                 <dd class="col-sm-10">
                     @r.ReviewContent
                 </dd>
@@ -52,7 +50,7 @@
         <hr />
         <form asp-action="Contact">
             <input type="hidden" name="i" value="@Model.Jobs[0].JobId" />
-            <button  type="submit" class="btn btn-primary" value="@Model.Jobs[0].JobId">Contact @Model.Jobs[0].Company.CompanyName</button>
+            <button type="submit" class="btn btn-primary" value="@Model.Jobs[0].JobId">Contact @Model.Jobs[0].Company.CompanyName</button>
         </form>&nbsp;
         <form asp-action="SearchResults">
             <input type="hidden" name="desc" value="@Model.Jobs[0].JobType" />

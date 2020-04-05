@@ -2,32 +2,34 @@
 
 @if (Model != null)
 {
-    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="JobSearch">Search</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                Job Name 
-                </th>
-                <th>
-                Job Type
-                </th>
-                <th>
-                Service Provider
-                </th>
-                <th>
-                Description
-                </th>
-                <th>
-                Price
-                </th>
-                <th>
-                Rating
-                </th>
-            </tr>
+    <form method="post" asp-action="SideToSideComparison">
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="JobSearch">Search</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Job Name
+                    </th>
+                    <th>
+                        Job Type
+                    </th>
+                    <th>
+                        Service Provider
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Rating
+                    </th>
+                </tr>
+            </thead>
             <tbody>
                 @for (int i = 0; i < Model.Jobs.Count(); i++)
-                {
+                 {
                     <tr>
                         <td>
                             @Model.Jobs[i].JobName
@@ -45,21 +47,25 @@
                             @Model.Jobs[i].Price
                         </td>
                         <td>
-                            @if(@Model.Reviews!=null){
-                            @Model.GetRating(Model.Reviews, Model.Jobs[i].JobId)
+                           @if (@Model.Reviews != null)
+                            {
+                                @Model.GetRating(Model.Reviews, Model.Jobs[i].JobId)
                             }
-                            else{
-                            <p>Not Rated</p>
+                            else
+                            {
+                                <p>Not Rated</p>
                             }
                         </td>
                         <td>
+                            <input type="checkbox" name="ToCompare" value="@Model.Jobs[i].JobId" />Compare? | 
                             <a asp-action="CompareJobDetails" asp-route-id="@Model.Jobs[i].JobId">See More</a>
                         </td>
                     </tr>
-                }
+                 }
             </tbody>
-        </thead>
-    </table>
+        </table>
+        <button type="submit" class="btn btn-primary" value="@Model.Jobs[0].JobId"> Compare selected</button>
+    </form>
 }
 else
 {

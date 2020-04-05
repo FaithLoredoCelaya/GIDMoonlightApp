@@ -1,0 +1,13 @@
+﻿@model List<JobsReviewRepository>
+@{
+    ViewData["Title"] = "Compare";
+    Layout = "_Layout";
+}
+<h1>Compare two Services</h1>
+<div style="left;">
+    @Html.Partial("CompareJobDetails", Model[0])
+</div>
+
+<div style="right;">
+    @Html.Partial("CompareJobDetails", Model[1])
+</div>

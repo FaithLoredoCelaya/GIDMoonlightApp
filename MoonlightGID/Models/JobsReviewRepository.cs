@@ -10,6 +10,8 @@ namespace MoonlightGID.Models
         public List<Reviews> Reviews { get; set; }
         public List<Jobs> Jobs { get; set; }
 
+        public List<int>ToCompare { get; set; }
+
         public double GetRating(List<Reviews> r,int id)
         {
             double result = 0;

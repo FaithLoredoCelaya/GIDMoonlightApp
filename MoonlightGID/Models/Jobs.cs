@@ -16,5 +16,10 @@ namespace MoonlightGID.Models
         public virtual Businesses Company { get; set; }
         public virtual Services Service { get; set; }
         public virtual Reviews Reviews { get; set; }
+
+        public static implicit operator Jobs(List<Jobs> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

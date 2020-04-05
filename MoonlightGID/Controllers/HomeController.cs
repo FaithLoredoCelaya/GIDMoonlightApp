@@ -143,10 +143,57 @@ namespace MoonlightGID.Controllers
             return View(j);
         }
 
+        [HttpPost]
+        public IActionResult SideToSideComparison(List<int> toCompare)
+        {
+            ViewBag.User = HttpContext.Session.GetJson<Customers>("Customer").UserLogin;
+            List<JobsReviewRepository> jobRepo = new List<JobsReviewRepository>();
+            JobsReviewRepository toAdd = new JobsReviewRepository();
+            JobsReviewRepository toAdd2 = new JobsReviewRepository();
+            if(toCompare.Count()==0)
+            {
+                return NotFound();
+            }
+            toAdd = GetReviews(toCompare[0]);
+            jobRepo.Add(toAdd);
+            if (toCompare.Count()<2)
+            {
+                return View(jobRepo);
+            }
+            else
+            {
+                toAdd2 = GetReviews(toCompare[1]);
+                jobRepo.Add(toAdd2);
+            }
+            return View(jobRepo);
+
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public JobsReviewRepository GetReviews(int id)
+        {
+            JobsReviewRepository jobRepo = new JobsReviewRepository();
+            jobRepo.Jobs = new List<Jobs>();
+            jobRepo.Reviews = new List<Reviews>();
+
+            jobRepo.Jobs.Add(_context.Jobs.Find(id));
+
+            for (int i = 0; i < jobRepo.Jobs.Count(); i++)
+            {
+                foreach (Reviews r in _context.Reviews)
+                {
+                    if (r.JobId == jobRepo.Jobs[i].JobId)
+                    {
+                        jobRepo.Reviews.Add(r);
+                    }
+                }
+            }
+            return jobRepo;
         }
     }
 }
