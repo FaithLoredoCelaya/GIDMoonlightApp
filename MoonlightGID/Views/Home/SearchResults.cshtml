@@ -48,11 +48,18 @@
                         </td>
                         <td>
                            @if (@Model.Reviews != null)
-                            {
-                                @Model.GetRating(Model.Reviews, Model.Jobs[i].JobId)
-                            }
-                            else
-                            {
+                           {
+                               if (Model.GetRating(Model.Reviews, Model.Jobs[i].JobId) != 0)
+                               {
+                                    @Math.Round(@Model.GetRating(Model.Reviews, Model.Jobs[i].JobId),2,MidpointRounding.AwayFromZero)
+                               }
+                               else
+                               {
+                                   <p>Not yet Rated</p>
+                               }
+                           }
+                           else
+                           {
                                 <p>Not Rated</p>
                             }
                         </td>

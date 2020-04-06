@@ -8,6 +8,7 @@ namespace MoonlightGID.Models
         public Businesses()
         {
             Jobs = new HashSet<Jobs>();
+            Reviews = new HashSet<Reviews>();
         }
 
         public int CompanyId { get; set; }
@@ -19,7 +20,7 @@ namespace MoonlightGID.Models
         public string EmailAddress { get; set; }
         public DateTime RegistrationDate { get; set; }
 
-        public virtual Reviews Reviews { get; set; }
         public virtual ICollection<Jobs> Jobs { get; set; }
+        public virtual ICollection<Reviews> Reviews { get; set; }
     }
 }

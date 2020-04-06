@@ -23,7 +23,9 @@ namespace MoonlightGID.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -79,16 +81,12 @@ namespace MoonlightGID.Models
                 entity.HasKey(e => e.ReviewId);
 
                 entity.HasIndex(e => e.CompanyId)
-                    .HasName("FK_Company")
-                    .IsUnique();
+                    .HasName("FK_Company");
 
                 entity.HasIndex(e => e.JobId)
-                    .HasName("FK_Jobs")
-                    .IsUnique();
+                    .HasName("FK_Jobs");
 
-                entity.Property(e => e.ReviewId)
-                    .HasColumnName("ReviewID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
 
@@ -99,14 +97,14 @@ namespace MoonlightGID.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Company)
-                    .WithOne(p => p.Reviews)
-                    .HasForeignKey<Reviews>(d => d.CompanyId)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.CompanyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_BusinessesID");
 
                 entity.HasOne(d => d.Job)
-                    .WithOne(p => p.Reviews)
-                    .HasForeignKey<Reviews>(d => d.JobId)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.JobId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Job");
             });

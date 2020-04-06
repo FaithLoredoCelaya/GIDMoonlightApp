@@ -37,16 +37,18 @@
                 Reviews:
             </dt>
             <dd></dd>
-            @foreach (Reviews r in Model.Reviews)
-            {
-                <dt class="col-sm-2">
-                    Rating: @r.Rating
-                </dt>
-                <dd class="col-sm-10">
-                    @r.ReviewContent
-                </dd>
-            }
         </dl>
+        @foreach (Reviews r in Model.Reviews)
+        {
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="col-sm-10">@r.ReviewContent</td>
+                        <td class="col-sm-2">Rating: @r.Rating</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
         <hr />
         <form asp-action="Contact">
             <input type="hidden" name="i" value="@Model.Jobs[0].JobId" />
